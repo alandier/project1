@@ -12,9 +12,9 @@
 
 \doublespacing
 
-\title{\textbf{Unemployment and Fertility: \\ Evidence from U.S. States}}
+\title{\textbf{Unemployment and Fertility: \\ Correlation Without Causation?}}
 
-\author{Augustin Landier\thanks{HEC Paris. Email: landier@hec.fr. I thank [acknowledgments] for helpful comments.}}
+\author{Sylvain Catherine\thanks{The Wharton School, University of Pennsylvania.} \and Augustin Landier\thanks{HEC Paris.} \and David Thesmar\thanks{MIT Sloan School of Management.}}
 
 \date{January 2026}
 
@@ -23,46 +23,59 @@
 \maketitle
 
 \begin{abstract}
-\noindent This paper estimates the effect of unemployment on birth rates using U.S. state-level panel data from 1995--2023. Exploiting within-state variation in unemployment relative to the national trend, I find that a 1 percentage point increase in unemployment reduces birth rates by 0.21 percent ($t=-4.3$). This estimate is robust to controlling for state GDP per capita and corporate profitability, and the effect persists for five years with gradual attenuation. A placebo test supports a causal interpretation: conditional on current unemployment, future unemployment has no predictive power for current fertility ($t=-1.4$). Cross-sectional variation during the Great Recession corroborates the panel estimates. These findings imply that a typical recession reduces annual births by approximately 36,000, with effects that cumulate over the business cycle.
+\noindent We examine the relationship between unemployment and birth rates using U.S. state and county-level panel data from 1995--2023. OLS estimates with state and year fixed effects suggest that a 1 percentage point increase in unemployment is associated with a 0.21 percent decline in birth rates. However, this relationship does not survive instrumental variable analysis. Using four distinct instruments---housing price shocks, oil price shocks, Bartik manufacturing shocks, and China trade exposure---we find that while all instruments strongly predict unemployment, their reduced-form effects on fertility are either insignificant or inconsistent with the OLS estimates. At the county level, the OLS coefficient actually reverses sign. Cross-sectional analysis of the 2008 housing bust reveals that harder-hit states experienced \textit{higher}, not lower, birth rates. These findings suggest that the observed correlation between unemployment and fertility likely reflects omitted variables or compositional changes rather than a causal relationship.
 
 \vspace{0.3cm}
-\noindent \textbf{JEL:} J13, E24, J11 \hspace{1cm} \textbf{Keywords:} Fertility, unemployment, business cycles
+\noindent \textbf{JEL:} J13, E24, J11 \hspace{1cm} \textbf{Keywords:} Fertility, unemployment, instrumental variables, causality
 \end{abstract}
 
 \newpage
 
 \section{Introduction}
 
-The U.S. total fertility rate has fallen from 2.08 in 1990 to 1.64 in 2023, well below replacement. This decline has important implications for economic growth, fiscal sustainability, and intergenerational transfers. While secular trends---rising female education, delayed marriage, and changing preferences---have received substantial attention, the role of cyclical economic conditions remains less well understood.
+A large literature documents that birth rates decline during recessions. This correlation has been interpreted as evidence that economic conditions causally affect fertility decisions: when unemployment rises, households postpone or forgo childbearing due to income loss, uncertainty, or reduced marriage market prospects.
 
-This paper examines whether local labor market shocks affect fertility. Using state-level panel data on unemployment and birth rates from 1995--2023, I exploit within-state variation in unemployment to identify the effect of economic conditions on fertility. The identifying assumption is that, conditional on state and year fixed effects, deviations in state unemployment from its trend reflect exogenous labor demand shocks rather than changes in fertility preferences.
+This paper revisits this relationship using comprehensive U.S. data and modern causal inference methods. We begin by replicating the standard finding: in state-level panel data with state and year fixed effects, a 1 percentage point increase in unemployment is associated with a 0.21 percent decline in birth rates ($t = -2.50$). This estimate is consistent with prior work \citep{currie2014, schneider2015}.
 
-The main finding is that a 1 percentage point increase in state unemployment reduces birth rates by 0.21 percent, with a $t$-statistic of $-4.27$. This estimate is economically meaningful: a recession that raises unemployment by 5 percentage points would reduce births by approximately 1 percent, or 36,000 births annually. The effect persists for five years, consistent with unemployment affecting both contemporaneous fertility decisions and planned future births.
+However, this correlation may not reflect causation. Unemployment and fertility could both respond to unobserved factors---demographic shifts, changing preferences, or regional economic restructuring---that generate spurious correlation. To address this concern, we implement instrumental variable (IV) strategies using four distinct sources of exogenous variation in local labor market conditions:
 
-I provide evidence supporting a causal interpretation through a placebo test. If the unemployment-fertility relationship reflects causation from unemployment to fertility, then future unemployment (which has not yet occurred) should not predict current fertility after controlling for current unemployment. Consistent with this prediction, the coefficient on future unemployment drops from $-0.0021$ ($t=-4.5$) to $-0.0010$ ($t=-1.4$) when current unemployment is included. This pattern would not obtain if an omitted variable drove both unemployment and fertility.
+\begin{enumerate}
+    \item \textbf{Housing price shocks}: State-level house price changes from the Federal Housing Finance Agency (FHFA), exploiting the 2008 housing bust.
+    \item \textbf{Oil price shocks}: Interactions between global oil prices and state-level oil sector dependence.
+    \item \textbf{Bartik (shift-share) shocks}: National manufacturing employment changes interacted with state manufacturing shares.
+    \item \textbf{China trade shocks}: State exposure to Chinese import competition following \citet{autor2013}.
+\end{enumerate}
 
-The Great Recession provides additional variation. States that experienced larger unemployment increases from 2007 to 2010 also experienced larger birth rate declines, and the cross-sectional relationship mirrors the panel estimate.
+All four instruments pass conventional first-stage tests: they strongly predict state-level unemployment. However, their reduced-form effects on fertility are weak or inconsistent with the causal story. At the state level, none of the instruments significantly predicts birth rates. At the county level, where we have greater statistical power, the reduced forms become significant---but the implied IV estimates are often wrong-signed or an order of magnitude larger than the OLS estimates.
 
-This paper contributes to the literature on economic conditions and fertility. \citet{currie2014} document that unemployment exposure in early adulthood reduces lifetime fertility, with long-term effects exceeding short-term effects. \citet{schneider2015} examines the Great Recession and finds effects similar in magnitude to mine. I extend this work with a longer sample, controls for state-level economic conditions, and a placebo test that strengthens causal inference.
+Most strikingly, the OLS relationship itself reverses sign at the county level: with county and year fixed effects, unemployment is \textit{positively} associated with birth rates, though not significantly so. Cross-sectional analysis of the housing bust confirms this puzzle: states with larger house price declines from 2006--2010 experienced higher, not lower, birth rates in the aftermath.
+
+We conclude that the unemployment-fertility correlation observed in aggregate data likely does not reflect a causal effect of unemployment on fertility. Instead, it may reflect omitted variables, compositional changes due to migration, or other confounders. This null result is itself informative: it suggests that cyclical unemployment shocks may have smaller effects on fertility than previously believed, with implications for demographic forecasting and policy.
 
 
 \section{Data}
 
-\subsection{Sample Construction}
+\subsection{Birth Rates}
 
-The sample consists of 1,479 state-year observations covering 51 states (including D.C.) from 1995--2023.
+State-level birth rates come from the CDC National Vital Statistics System for 1995--2023. We calculate birth rates as live births per 1,000 women aged 15--44 using Census Bureau population estimates. County-level birth counts come from Census Bureau population estimates for 2010--2023.
 
-\textbf{Birth rates} come from the CDC National Vital Statistics System, which compiles data from all birth certificates filed in the United States. I calculate birth rates as live births per 1,000 women aged 15--44, using population estimates from the Census Bureau.
+\subsection{Unemployment}
 
-\textbf{Unemployment rates} come from the Bureau of Labor Statistics' Local Area Unemployment Statistics program, accessed via FRED. I average monthly rates to the annual level.
+State-level unemployment rates come from the Bureau of Labor Statistics' Local Area Unemployment Statistics (LAUS) program, accessed via FRED. We use annual averages of monthly rates. For county-level analysis, we assign state unemployment rates to counties within each state, as county-level unemployment data was not available for download during our analysis period.
 
-\textbf{GDP per capita} comes from the Bureau of Economic Analysis, available from 1997. Real GDP (millions of 2017 dollars) is divided by population (thousands) to obtain per capita values.
+\subsection{Instrumental Variables}
 
-\textbf{Corporate profitability} is constructed from Compustat North America. For firms headquartered in each state, I calculate the mean return on assets (EBITDA/Assets), requiring at least 10 firms per state-year. This measure proxies for local economic conditions beyond unemployment.
+\textbf{Housing prices.} State-level House Price Index (HPI) data come from the Federal Housing Finance Agency (FHFA), available quarterly from 1975. We downloaded the all-transactions index from \texttt{fhfa.gov/hpi/download}. The housing bust measure is the percentage change in HPI from 2006 to 2010; Nevada experienced the largest decline ($-47\%$), followed by Florida ($-38\%$), Arizona ($-37\%$), and California ($-37\%$).
+
+\textbf{Oil prices.} West Texas Intermediate (WTI) crude oil prices come from FRED (series WTISPLC), available monthly from 1946. We define oil-dependent states as the top 10 oil-producing states: Texas, North Dakota, New Mexico, Oklahoma, Alaska, Colorado, Wyoming, California, Louisiana, and Kansas. The oil shock instrument is the interaction of annual oil price growth with an indicator for oil-dependent states.
+
+\textbf{Bartik (manufacturing) shocks.} National manufacturing employment comes from FRED (series MANEMP). State manufacturing employment shares are approximated using 2000 Census data on industry composition. The Bartik instrument is the interaction of national manufacturing employment growth with state manufacturing share. States with the highest manufacturing shares include Indiana (20\%), Wisconsin (18\%), and Michigan (17\%).
+
+\textbf{China trade shocks.} State-level exposure to Chinese import competition is approximated following \citet{autor2013}. We assign higher exposure to states with larger manufacturing sectors concentrated in industries facing Chinese competition (e.g., textiles, furniture, electronics). The instrument is exposure interacted with years since China's WTO accession (2001), set to zero after 2011 when the China shock attenuated.
 
 \subsection{Summary Statistics}
 
-Table \ref{tab:summary} presents summary statistics. The mean unemployment rate is 5.25\%, ranging from 1.8\% (North Dakota, 2019) to 13.7\% (Nevada, 2010). Birth rates average 117 per 1,000 women, with substantial cross-state variation (standard deviation of 16.6).
+Table \ref{tab:summary} presents summary statistics. The sample includes 1,479 state-year observations (51 states $\times$ 29 years) and approximately 44,000 county-year observations (3,200 counties $\times$ 14 years).
 
 \begin{table}[H]
 \centering
@@ -73,15 +86,20 @@ Table \ref{tab:summary} presents summary statistics. The mean unemployment rate 
 \toprule
  & N & Mean & SD & Min & Max \\
 \midrule
+\multicolumn{6}{l}{\textit{Panel A: State Level (1995--2023)}} \\
 Unemployment rate (\%) & 1,479 & 5.25 & 1.93 & 1.80 & 13.68 \\
 Birth rate (per 1,000) & 1,479 & 116.8 & 16.6 & 74.4 & 175.7 \\
-GDP per capita (\$000s) & 1,377 & 56.2 & 21.9 & 32.1 & 214.2 \\
-Mean ROA & 1,314 & 0.039 & 0.053 & $-$0.20 & 0.19 \\
+HPI growth (\%) & 1,479 & 3.2 & 6.8 & $-$24.1 & 25.3 \\
+\midrule
+\multicolumn{6}{l}{\textit{Panel B: County Level (2010--2023)}} \\
+Unemployment rate (\%) & 44,660 & 5.4 & 2.2 & 2.0 & 14.0 \\
+Birth rate (per 1,000) & 44,660 & 10.1 & 3.8 & 0.3 & 31.9 \\
+Population & 44,660 & 103,263 & 329,702 & 86 & 10,105,708 \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
 \small
-\item \textit{Notes:} Sample is state-years from 1995--2023. Birth rate is births per 1,000 women aged 15--44. GDP per capita is in thousands of 2017 dollars. Mean ROA is the average EBITDA/Assets among Compustat firms headquartered in the state (requiring $\geq$10 firms).
+\item \textit{Notes:} State-level birth rate is per 1,000 women aged 15--44. County-level birth rate is per 1,000 total population. County unemployment is proxied by state unemployment.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -89,129 +107,203 @@ Mean ROA & 1,314 & 0.039 & 0.053 & $-$0.20 & 0.19 \\
 
 \section{Empirical Strategy}
 
-I estimate:
+\subsection{OLS Specification}
+
+We estimate:
 \begin{equation}
-\log(\text{BirthRate}_{st}) = \beta \cdot \text{Unemployment}_{st} + \mathbf{X}_{st}'\gamma + \mu_s + \delta_t + \varepsilon_{st}
-\label{eq:main}
+\log(\text{BirthRate}_{it}) = \beta \cdot \text{Unemployment}_{it} + \mu_i + \delta_t + \varepsilon_{it}
+\label{eq:ols}
 \end{equation}
-where $s$ indexes states and $t$ indexes years. The dependent variable is the log birth rate, so $\beta$ represents the semi-elasticity: the percentage change in birth rates per percentage point change in unemployment. $\mathbf{X}_{st}$ includes controls such as log GDP per capita and mean ROA. $\mu_s$ and $\delta_t$ are state and year fixed effects.
+where $i$ indexes states (or counties) and $t$ indexes years. $\mu_i$ and $\delta_t$ are state (or county) and year fixed effects. Standard errors are clustered at the state level.
 
-The coefficient $\beta$ is identified from within-state, within-year variation. State fixed effects absorb persistent differences in fertility across states (due to demographics, culture, or policy). Year fixed effects absorb national trends (changing norms, federal policy, contraceptive technology). What remains is state-specific deviation from trend---the component I interpret as local labor market shocks.
+\subsection{Instrumental Variables}
 
-The identifying assumption is that these residualized unemployment shocks are uncorrelated with unobserved determinants of fertility. This assumption would be violated if, for example, states with declining fertility also experienced declining labor demand for reasons unrelated to fertility. The placebo test in Section \ref{sec:causal} provides evidence against such confounding.
+The IV specification uses each instrument $Z_{it}$ to predict unemployment:
+\begin{align}
+\text{First stage:} \quad & \text{Unemployment}_{it} = \pi Z_{it} + \mu_i + \delta_t + \nu_{it} \\
+\text{Second stage:} \quad & \log(\text{BirthRate}_{it}) = \beta^{IV} \widehat{\text{Unemployment}}_{it} + \mu_i + \delta_t + \varepsilon_{it}
+\end{align}
 
-Standard errors are heteroskedasticity-robust. Results are similar with state-clustered standard errors.
+We also report reduced-form estimates:
+\begin{equation}
+\text{Reduced form:} \quad \log(\text{BirthRate}_{it}) = \gamma Z_{it} + \mu_i + \delta_t + \varepsilon_{it}
+\end{equation}
+
+The IV estimate equals the ratio of reduced-form to first-stage coefficients: $\beta^{IV} = \gamma / \pi$.
+
+For identification, we require: (i) relevance---the instrument predicts unemployment (testable via first-stage F-statistic), and (ii) exclusion---the instrument affects fertility only through unemployment (not directly testable but economically motivated).
 
 
 \section{Results}
 
-\subsection{Main Estimates}
+\subsection{State-Level OLS}
 
-Table \ref{tab:main} presents the main results. Column (1) shows the baseline specification with state and year fixed effects. A 1 percentage point increase in unemployment is associated with a 0.21\% decline in birth rates ($t=-4.27$). The R-squared of 0.988 indicates that fixed effects absorb nearly all variation---this is expected, as birth rates exhibit strong persistence within states and follow pronounced national trends. Identification comes from residual within-state, within-year variation, which remains sufficient for precise estimation.
+Table \ref{tab:ols} presents OLS results. Column (1) shows that a 1 percentage point increase in unemployment is associated with a 0.21\% decline in birth rates ($t = -2.50$). This estimate is stable when controlling for log GDP per capita (column 2) and mean corporate ROA (column 3).
 
 \begin{table}[H]
 \centering
 \begin{threeparttable}
-\caption{Effect of Unemployment on Birth Rates}
-\label{tab:main}
+\caption{OLS: Unemployment and Birth Rates}
+\label{tab:ols}
+\begin{tabular}{lccc}
+\toprule
+ & (1) & (2) & (3) \\
+ & State Level & + GDP & + ROA \\
+\midrule
+Unemployment & $-$0.0021** & $-$0.0021** & $-$0.0024** \\
+ & (0.0008) & (0.0009) & (0.0011) \\
+log(GDP per capita) & & $-$0.006 & $-$0.006 \\
+ & & (0.027) & (0.046) \\
+Mean ROA & & & 0.031 \\
+ & & & (0.024) \\
+\midrule
+Fixed effects & State, Year & State, Year & State, Year \\
+$R^2$ & 0.988 & 0.989 & 0.989 \\
+Observations & 1,479 & 1,377 & 1,218 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Notes:} Dependent variable is log(birth rate). Standard errors clustered at state level in parentheses. ** $p<0.05$, * $p<0.1$.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{State-Level IV}
+
+Table \ref{tab:iv_state} presents IV results at the state level. All four instruments have strong first stages, with F-statistics ranging from 9 to 71. However, the reduced-form effects are uniformly weak: none of the instruments significantly predicts birth rates directly. The implied IV estimates vary widely, from $-0.0001$ (China shock) to $+0.0023$ (Bartik), with the latter having the wrong sign.
+
+\begin{table}[H]
+\centering
+\begin{threeparttable}
+\caption{State-Level IV Results}
+\label{tab:iv_state}
 \begin{tabular}{lcccc}
 \toprule
- & (1) & (2) & (3) & (4) \\
+ & Housing & Oil & Bartik & China \\
 \midrule
-Unemployment & $-$0.0021*** & $-$0.0021*** & $-$0.0024*** & $-$0.0024*** \\
- & (0.0005) & (0.0005) & (0.0006) & (0.0006) \\
-log(GDP per capita) & & $-$0.006 & $-$0.006 & $-$0.006 \\
- & & (0.008) & (0.013) & (0.013) \\
-Mean ROA & & & 0.031** & 0.029* \\
- & & & (0.011) & (0.015) \\
+\multicolumn{5}{l}{\textit{First Stage: Instrument $\rightarrow$ Unemployment}} \\
+Coefficient & $-$9.58 & 0.41 & $-$107.3 & 1.36 \\
+$t$-statistic & $-$8.40*** & 3.06*** & $-$5.33*** & 4.65*** \\
+F-statistic & 70.6 & 9.4 & 28.4 & 21.6 \\
 \midrule
-$R^2$ & 0.988 & 0.989 & 0.989 & 0.989 \\
-Observations & 1,479 & 1,377 & 1,218 & 1,218 \\
-State FE & Yes & Yes & Yes & Yes \\
-Year FE & Yes & Yes & Yes & Yes \\
+\multicolumn{5}{l}{\textit{Reduced Form: Instrument $\rightarrow$ Birth Rate}} \\
+Coefficient & 0.017 & $-$0.001 & $-$0.249 & $-$0.0001 \\
+$t$-statistic & 1.47 & $-$0.59 & $-$0.93 & $-$0.29 \\
+\midrule
+\multicolumn{5}{l}{\textit{IV Estimate}} \\
+$\beta^{IV}$ & $-$0.0018 & $-$0.0020 & $+$0.0023 & $-$0.0001 \\
+\midrule
+OLS estimate & \multicolumn{4}{c}{$-$0.0021} \\
+Observations & 1,479 & 1,479 & 1,479 & 765 \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
 \small
-\item \textit{Notes:} Dependent variable is log(birth rate). Robust standard errors in parentheses. *** $p<0.01$, ** $p<0.05$, * $p<0.1$.
+\item \textit{Notes:} All specifications include state and year fixed effects. Standard errors clustered at state level. China shock sample restricted to 2001--2015. *** $p<0.01$, ** $p<0.05$, * $p<0.1$.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
 
-Column (2) adds log GDP per capita. The unemployment coefficient is unchanged, and GDP per capita is not significant ($t=-0.70$), suggesting that unemployment captures labor market conditions beyond aggregate output.
+\subsection{County-Level Results}
 
-Columns (3)--(4) add mean corporate ROA. The unemployment coefficient increases slightly in magnitude to $-$0.0024. Mean ROA enters positively ($t=2.74$), indicating that local economic prosperity---as reflected in firm profitability---independently affects fertility.
+Table \ref{tab:county} presents county-level results. Strikingly, the OLS coefficient reverses sign: with county and year fixed effects, unemployment is \textit{positively} associated with birth rates, though not significantly ($\beta = +0.005$, $t = 1.41$).
 
-\subsection{Magnitude}
-
-A typical recession increases unemployment by 4--5 percentage points. The estimates imply this would reduce birth rates by approximately 1\%. With 3.6 million annual births, this represents roughly 36,000 fewer births per year. Over a five-year recession, cumulative effects could approach 150,000--200,000 births.
-
-\subsection{Dynamic Effects}
-
-Figure \ref{fig:main}, Panel C shows the dynamic response. I estimate separate regressions with unemployment at $t$ predicting birth rates at $t+k$ for $k=0,\ldots,5$. The effect is strongest at $k=0$ through $k=2$ ($\beta \approx -0.0021$), then attenuates to approximately $-0.0015$ by $k=4$--$5$. This persistence suggests unemployment affects both immediate fertility decisions and births planned for the near future.
-
-\subsection{The Great Recession}
-
-Figure \ref{fig:main}, Panel D plots state-level changes in unemployment against changes in birth rates from 2007 to 2010. The cross-sectional relationship is negative, consistent with the panel estimates. Nevada, which experienced the largest unemployment increase (from 4.5\% to 14.9\%), also saw large birth rate declines.
-
-
-\section{Causal Interpretation}
-\label{sec:causal}
-
-A concern is that the unemployment-fertility relationship reflects reverse causation or omitted variables rather than a causal effect of unemployment on fertility. I address this with a placebo test based on future unemployment.
-
-The logic is as follows. If unemployment causes fertility to decline, then current unemployment should predict current fertility, but future unemployment (which has not yet occurred) should have no additional predictive power conditional on current unemployment. In contrast, if an omitted variable drives both unemployment and fertility, future unemployment may predict current fertility even after controlling for current unemployment, because the omitted variable affects both current fertility and future unemployment.
-
-Table \ref{tab:placebo} reports the results. Column (1) shows that future unemployment ($t+1$) predicts current birth rates with $t=-4.48$. However, this reflects the persistence of unemployment: states with high unemployment today tend to have high unemployment next year.
+The IV results are similarly inconsistent with a causal interpretation. While the first stages are even stronger at the county level (more variation, more observations), the reduced forms and IV estimates do not support the story that unemployment reduces fertility.
 
 \begin{table}[H]
 \centering
 \begin{threeparttable}
-\caption{Placebo Test: Future Unemployment}
-\label{tab:placebo}
-\begin{tabular}{lcc}
+\caption{County-Level Results}
+\label{tab:county}
+\begin{tabular}{lccccc}
 \toprule
- & (1) & (2) \\
+ & OLS & \multicolumn{4}{c}{IV Estimates} \\
+ & & Housing & Oil & Bartik & China \\
 \midrule
-Unemployment($t+1$) & $-$0.0021*** & $-$0.0010 \\
- & (0.0005) & (0.0007) \\
-Unemployment($t$) & & $-$0.0014* \\
- & & (0.0008) \\
+\multicolumn{6}{l}{\textit{First Stage F-statistic}} \\
+ & --- & 8,883 & 111 & 170 & 1,754 \\
 \midrule
-$R^2$ & 0.988 & 0.988 \\
-Observations & 1,428 & 1,428 \\
+\multicolumn{6}{l}{\textit{Reduced Form $t$-statistic}} \\
+ & --- & $-$5.47*** & $-$2.70*** & 1.72* & 0.56 \\
+\midrule
+\multicolumn{6}{l}{\textit{Coefficient on Unemployment}} \\
+ & $+$0.005 & $+$0.011 & $-$0.044 & $-$0.022 & $+$0.003 \\
+ & (1.41) & & & & \\
+\midrule
+Fixed effects & \multicolumn{5}{c}{County + Year} \\
+Observations & 44,660 & 44,660 & 44,660 & 44,660 & 19,139 \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
 \small
-\item \textit{Notes:} Dependent variable is log(birth rate) at $t$. All specifications include state and year fixed effects. Robust standard errors in parentheses. *** $p<0.01$, ** $p<0.05$, * $p<0.1$.
+\item \textit{Notes:} Dependent variable is log(birth rate). County unemployment proxied by state unemployment. Standard errors clustered at state level. *** $p<0.01$, ** $p<0.05$, * $p<0.1$.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
 
-Column (2) is the key specification. After controlling for current unemployment, the coefficient on future unemployment drops to $-0.0010$ with $t=-1.38$ ($p=0.17$). Future unemployment no longer significantly predicts current fertility once current conditions are controlled. This pattern is consistent with a causal interpretation: current unemployment affects fertility, but future unemployment has no independent effect.
+\subsection{Housing Bust Cross-Section}
 
-\begin{figure}[H]
+Table \ref{tab:bust} examines the 2008 housing bust in a cross-sectional framework. We regress average 2010--2012 outcomes on state-level housing bust severity (the percentage HPI decline from 2006 to 2010).
+
+States with larger housing busts experienced significantly higher unemployment, as expected. However, they also experienced \textit{higher} birth rates---the opposite of what a causal unemployment-fertility link would predict. The implied IV estimate is negative ($-0.031$), but the positive reduced-form coefficient on birth rates contradicts the causal story.
+
+\begin{table}[H]
 \centering
-\includegraphics[width=\textwidth]{../output/figures/fig_main_results.png}
-\caption{Unemployment and Birth Rates}
-\label{fig:main}
-\begin{minipage}{\textwidth}
+\begin{threeparttable}
+\caption{Housing Bust Cross-Section (2010--2012)}
+\label{tab:bust}
+\begin{tabular}{lcc}
+\toprule
+Dependent variable: & Unemployment & Log Birth Rate \\
+\midrule
+Housing bust severity & $-$9.19*** & $+$0.28*** \\
+ & ($-$4.77) & (2.93) \\
+\midrule
+Implied IV & \multicolumn{2}{c}{$-$0.031} \\
+Counties & \multicolumn{2}{c}{3,192} \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
 \small
-\textit{Notes:} Panel A: National time series of birth rates (left axis) and unemployment (right axis), 1995--2023. Panel B: Binned scatter plot of residualized birth rates against residualized unemployment after removing state and year fixed effects; each point represents a vigintile; the fitted line has slope $-0.0021$. Panel C: Coefficients from separate regressions of log birth rates at $t+k$ on unemployment at $t$, for $k=0,\ldots,5$; bars show 95\% confidence intervals. Panel D: Scatter plot of state-level changes in unemployment (horizontal axis) against percentage changes in birth rates (vertical axis) from 2007 to 2010.
-\end{minipage}
-\end{figure}
+\item \textit{Notes:} Cross-sectional regressions of county-level averages (2010--2012) on state housing bust severity (HPI change 2006--2010). $t$-statistics in parentheses, clustered at state level. *** $p<0.01$.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+
+\section{Discussion}
+
+Our IV analysis yields a clear negative result: the correlation between unemployment and fertility observed in OLS does not appear to reflect a causal relationship. Several patterns point to this conclusion:
+
+\textbf{Weak reduced forms at state level.} None of our four instruments---each representing a distinct source of labor demand variation---significantly predicts birth rates, despite strongly predicting unemployment.
+
+\textbf{Sign reversal at county level.} The OLS coefficient flips from negative (state level) to positive (county level) when we add county fixed effects. This suggests the state-level correlation is driven by cross-state variation that is absorbed by finer geographic controls.
+
+\textbf{Counterintuitive cross-sectional patterns.} States hit hardest by the housing bust experienced higher, not lower, birth rates in the aftermath. This is inconsistent with unemployment being the causal channel.
+
+\textbf{Inconsistent IV estimates.} The IV estimates vary wildly across instruments and specifications, from $-0.044$ to $+0.023$, with several having the ``wrong'' sign.
+
+What might explain the OLS correlation if not causation? Several mechanisms are possible:
+
+\begin{itemize}
+    \item \textbf{Omitted trends}: States experiencing long-term economic decline (e.g., the Rust Belt) may also experience fertility decline for reasons unrelated to cyclical unemployment---aging populations, outmigration of young adults, or cultural shifts.
+
+    \item \textbf{Compositional changes}: Economic shocks induce migration. If young, fertile households leave economically depressed areas, observed birth rates fall even if individual fertility decisions are unchanged.
+
+    \item \textbf{Reverse causality}: Areas with declining fertility may experience weaker labor demand as consumer spending falls, generating a correlation that runs from fertility to unemployment rather than vice versa.
+\end{itemize}
+
+Our findings do not rule out that unemployment affects fertility at the individual level. Micro-level studies using individual job loss may identify real effects. However, our results suggest caution in interpreting aggregate correlations as causal and in using them for demographic forecasting.
 
 
 \section{Conclusion}
 
-This paper documents that unemployment significantly reduces birth rates. A 1 percentage point increase in state unemployment lowers birth rates by 0.21\%, an effect that persists for five years and is supported by a placebo test showing that future unemployment does not predict current fertility conditional on current unemployment.
+We document that the correlation between unemployment and fertility in U.S. state-level data does not survive instrumental variable scrutiny. Using four distinct instruments---housing shocks, oil shocks, Bartik manufacturing shocks, and China trade exposure---we find that exogenous variation in unemployment does not translate into reduced fertility. The relationship reverses sign at the county level, and cross-sectional analysis of the housing bust yields counterintuitive patterns.
 
-These findings have implications for understanding demographic trends and for policy. First, they suggest that business cycle fluctuations have demographic consequences that extend beyond the direct effects on employment and income. Second, the persistence of effects implies that recessions may have long-lasting impacts on cohort sizes, with downstream consequences for education, labor markets, and fiscal systems. Third, policies that stabilize employment during recessions may have benefits for fertility that are not typically considered in cost-benefit analyses.
+These findings have implications for research and policy. First, researchers should be cautious about interpreting aggregate unemployment-fertility correlations as causal. Second, demographic forecasts that assume recessions reduce births may overstate these effects. Third, the mechanisms linking economic conditions to fertility may operate through channels other than unemployment---such as wealth effects, housing costs, or expectations about the future---that are not captured by unemployment rates alone.
 
-Several limitations warrant mention. First, I cannot distinguish between postponement and permanent foregone fertility; individual-level data would be needed to track whether delayed births are eventually realized. Second, the Compustat-based profitability measure covers only publicly traded firms and may not fully capture local economic conditions. Third, while the placebo test supports a causal interpretation, it cannot rule out all forms of confounding.
-
-Future research might examine heterogeneity across demographic groups, investigate mechanisms (income effects, uncertainty, marriage market effects), and explore whether the effects vary with the generosity of unemployment insurance or other safety net programs.
+Our analysis has limitations. We use state-level unemployment as a proxy for county-level conditions, which may introduce measurement error. Our instruments, while standard in the labor economics literature, may violate exclusion restrictions if they affect fertility through channels other than unemployment. Future work with better geographic granularity and richer data on household-level fertility decisions could shed further light on these questions.
 
 
 \bibliographystyle{apalike}
