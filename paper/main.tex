@@ -305,6 +305,42 @@ These findings have implications for research and policy. First, researchers sho
 
 Our analysis has limitations. We use state-level unemployment as a proxy for county-level conditions, which may introduce measurement error. Our instruments, while standard in the labor economics literature, may violate exclusion restrictions if they affect fertility through channels other than unemployment. Future work with better geographic granularity and richer data on household-level fertility decisions could shed further light on these questions.
 
+\newpage
+\section*{Figures}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../output/figures/fig_main_results.png}
+\caption{Unemployment and Birth Rates: Main Results}
+\label{fig:main}
+\begin{minipage}{0.9\textwidth}
+\small
+\textit{Notes:} Panel A shows national trends in birth rates (left axis) and unemployment (right axis). Panel B shows a binned scatter plot of residualized log birth rates against residualized unemployment, after absorbing state and year fixed effects; the slope corresponds to the OLS estimate of $-0.0021$. Panel C shows dynamic response coefficients at different lags. Panel D shows the Great Recession cross-state variation: changes in unemployment (2007--2010) vs. changes in birth rates.
+\end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../output/figures/fig8_unemployment_births.png}
+\caption{Additional Evidence on the Unemployment-Fertility Relationship}
+\label{fig:additional}
+\begin{minipage}{0.9\textwidth}
+\small
+\textit{Notes:} Panel A shows national trends. Panel B shows residualized birth rates against residualized unemployment after state and year fixed effects. Panel C shows the effect of unemployment on birth rates at different lags (t through t+3). Panel D shows the Great Recession cross-state variation with state labels for major housing bust states (NV, FL, AZ, CA).
+\end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{../output/figures/fig_causal_analysis.png}
+\caption{Event Study and Placebo Tests}
+\label{fig:causal}
+\begin{minipage}{0.9\textwidth}
+\small
+\textit{Notes:} Panel A shows an event study of the effect of unemployment shocks on birth rates, from 3 years before to 5 years after. The shaded region indicates the ``placebo'' period where future unemployment should not affect current fertility under the causal hypothesis. Panel B shows placebo test results: coefficients on future unemployment (t+1, t+2) when controlling for current unemployment. Panel C shows ROA dispersion over time. Panel D shows birth rates vs. ROA dispersion.
+\end{minipage}
+\end{figure}
+
 
 \bibliographystyle{apalike}
 \bibliography{references}
