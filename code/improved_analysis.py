@@ -335,26 +335,39 @@ gr = pre.merge(post, on='state')
 gr['delta_unemp'] = gr['unemp_2010'] - gr['unemp_2007']
 gr['delta_birth'] = (gr['birth_2010'] - gr['birth_2007']) / gr['birth_2007'] * 100
 
-ax4.scatter(gr['delta_unemp'], gr['delta_birth'], s=50, alpha=0.7, color='darkgreen', edgecolor='black')
+# Pretty scatter plot
+ax4.scatter(gr['delta_unemp'], gr['delta_birth'], s=80, alpha=0.8,
+            color='#2E86AB', edgecolor='white', linewidth=0.8, zorder=3)
 
 # Fit line
 slope_gr, intercept_gr, r_val, _, _ = stats.linregress(gr['delta_unemp'], gr['delta_birth'])
-x_line = np.linspace(gr['delta_unemp'].min(), gr['delta_unemp'].max(), 100)
-ax4.plot(x_line, intercept_gr + slope_gr * x_line, 'r-', linewidth=2,
-         label=f'Slope: {slope_gr:.2f}, R²={r_val**2:.2f}')
+x_line = np.linspace(0, 10, 100)  # Clean x range
+ax4.plot(x_line, intercept_gr + slope_gr * x_line, color='#E94F37', linewidth=2.5,
+         label=f'Slope: {slope_gr:.2f}, R²={r_val**2:.2f}', zorder=2)
 
-# Label some states
+# Label key states (housing bust states and outliers)
+labels_to_show = {'NV': 'Nevada', 'FL': 'Florida', 'AZ': 'Arizona', 'CA': 'California',
+                  'MI': 'Michigan', 'ND': 'N. Dakota', 'UT': 'Utah'}
 for _, row in gr.iterrows():
-    if row['state'] in ['NV', 'ND', 'CA', 'FL', 'MI']:
-        ax4.annotate(row['state'], (row['delta_unemp'], row['delta_birth']),
-                    fontsize=9, ha='left', va='bottom')
+    if row['state'] in labels_to_show:
+        # Offset labels to avoid overlap
+        offset_x, offset_y = 0.15, 0.3
+        if row['state'] == 'CA':
+            offset_x, offset_y = -0.8, 0.4
+        elif row['state'] == 'ND':
+            offset_x, offset_y = 0.15, -0.5
+        ax4.annotate(row['state'], (row['delta_unemp'] + offset_x, row['delta_birth'] + offset_y),
+                    fontsize=9, fontweight='bold', color='#333333')
 
-ax4.axhline(0, color='gray', linestyle='--', linewidth=1)
-ax4.set_xlabel('Change in Unemployment (pp), 2007-2010', fontsize=12)
-ax4.set_ylabel('Change in Birth Rate (%), 2007-2010', fontsize=12)
+# Clean axis limits
+ax4.set_xlim(0, 10)
+ax4.set_ylim(-16, -4)
+ax4.axhline(0, color='gray', linestyle='--', linewidth=0.8, alpha=0.5)
+ax4.set_xlabel('Change in Unemployment (pp), 2007–2010', fontsize=12)
+ax4.set_ylabel('Change in Birth Rate (%), 2007–2010', fontsize=12)
 ax4.set_title('D. Great Recession: Cross-State Variation', fontsize=13, fontweight='bold')
-ax4.legend(loc='upper right')
-ax4.grid(True, alpha=0.3)
+ax4.legend(loc='lower left', framealpha=0.9)
+ax4.grid(True, alpha=0.2, linestyle='-', linewidth=0.5)
 
 plt.tight_layout()
 plt.savefig('/Users/landieraugustin/project1/output/figures/fig_main_results.png', dpi=150, bbox_inches='tight')
