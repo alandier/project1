@@ -8,12 +8,13 @@
 \usepackage{setspace}
 \usepackage{hyperref}
 \usepackage{float}
+\usepackage{threeparttable}
 
 \doublespacing
 
-\title{\textbf{Local Economic Conditions and Birth Rates: \\[0.3cm] Evidence from U.S. States, 1995--2023}}
+\title{\textbf{Unemployment and Fertility: \\ Evidence from U.S. States}}
 
-\author{Augustin Landier\thanks{HEC Paris. Email: landier@hec.fr}}
+\author{Augustin Landier\thanks{HEC Paris. Email: landier@hec.fr. I thank [acknowledgments] for helpful comments.}}
 
 \date{January 2026}
 
@@ -22,188 +23,195 @@
 \maketitle
 
 \begin{abstract}
-Using state-level panel data from 1995--2023, we examine the relationship between local economic conditions and birth rates in the United States. We find that unemployment significantly reduces fertility: a 1 percentage point increase in state unemployment is associated with a 0.21\% decline in birth rates ($t = -4.3$), controlling for state and year fixed effects. This effect persists for at least two years, consistent with unemployment affecting both current and planned future births. The Great Recession provides a natural experiment: states experiencing larger unemployment increases from 2007--2010 also experienced larger birth rate declines. These findings highlight how macroeconomic shocks can have lasting demographic consequences.
+\noindent This paper estimates the effect of unemployment on birth rates using U.S. state-level panel data from 1995--2023. Exploiting within-state variation in unemployment relative to the national trend, I find that a 1 percentage point increase in unemployment reduces birth rates by 0.21 percent ($t=-4.3$). This estimate is robust to controlling for state GDP per capita and corporate profitability, and the effect persists for five years with gradual attenuation. A placebo test supports a causal interpretation: conditional on current unemployment, future unemployment has no predictive power for current fertility ($t=-1.4$). Cross-sectional variation during the Great Recession corroborates the panel estimates. These findings imply that a typical recession reduces annual births by approximately 36,000, with effects that cumulate over the business cycle.
 
-\vspace{0.5cm}
-\noindent \textbf{Keywords:} Birth rates, fertility, unemployment, economic conditions, Great Recession
-
-\noindent \textbf{JEL Codes:} J13, E24, J11
+\vspace{0.3cm}
+\noindent \textbf{JEL:} J13, E24, J11 \hspace{1cm} \textbf{Keywords:} Fertility, unemployment, business cycles
 \end{abstract}
 
 \newpage
 
 \section{Introduction}
 
-Birth rates in the United States have declined substantially over the past three decades. The total fertility rate fell from 2.08 children per woman in 1990 to 1.64 in 2023, well below the replacement level of 2.1. Understanding the determinants of this decline has important implications for economic growth, fiscal sustainability, and social policy.
+The U.S. total fertility rate has fallen from 2.08 in 1990 to 1.64 in 2023, well below replacement. This decline has important implications for economic growth, fiscal sustainability, and intergenerational transfers. While secular trends---rising female education, delayed marriage, and changing preferences---have received substantial attention, the role of cyclical economic conditions remains less well understood.
 
-One potential driver of fertility decisions is economic conditions. When labor markets weaken, households may postpone or forgo having children due to income uncertainty, reduced financial resources, or concerns about future employment prospects. This paper examines whether local economic shocks---measured by state-level unemployment rates---affect birth rates.
+This paper examines whether local labor market shocks affect fertility. Using state-level panel data on unemployment and birth rates from 1995--2023, I exploit within-state variation in unemployment to identify the effect of economic conditions on fertility. The identifying assumption is that, conditional on state and year fixed effects, deviations in state unemployment from its trend reflect exogenous labor demand shocks rather than changes in fertility preferences.
 
-We make three contributions to the literature on economic conditions and fertility.
+The main finding is that a 1 percentage point increase in state unemployment reduces birth rates by 0.21 percent, with a $t$-statistic of $-4.27$. This estimate is economically meaningful: a recession that raises unemployment by 5 percentage points would reduce births by approximately 1 percent, or 36,000 births annually. The effect persists for five years, consistent with unemployment affecting both contemporaneous fertility decisions and planned future births.
 
-\textbf{First}, we document a significant negative relationship between unemployment and birth rates using state-level panel data from 1995--2023. With state and year fixed effects, a 1 percentage point increase in unemployment is associated with a 0.21\% decline in birth rates ($t = -4.27$). This within-state, within-year variation provides credible identification of the causal effect of local labor market conditions on fertility.
+I provide evidence supporting a causal interpretation through a placebo test. If the unemployment-fertility relationship reflects causation from unemployment to fertility, then future unemployment (which has not yet occurred) should not predict current fertility after controlling for current unemployment. Consistent with this prediction, the coefficient on future unemployment drops from $-0.0021$ ($t=-4.5$) to $-0.0010$ ($t=-1.4$) when current unemployment is included. This pattern would not obtain if an omitted variable drove both unemployment and fertility.
 
-\textbf{Second}, we show that the effect of unemployment persists over time. Unemployment at time $t$ affects birth rates not only contemporaneously but also at $t+1$ and $t+2$, with similar coefficient magnitudes. This pattern suggests that economic shocks affect both current fertility decisions and planned future births.
+The Great Recession provides additional variation. States that experienced larger unemployment increases from 2007 to 2010 also experienced larger birth rate declines, and the cross-sectional relationship mirrors the panel estimate.
 
-\textbf{Third}, we use the Great Recession as a natural experiment. States that experienced larger unemployment increases from 2007 to 2010 also experienced larger declines in birth rates. This cross-sectional variation reinforces our panel regression findings and provides additional evidence for a causal interpretation.
-
-The remainder of the paper is organized as follows. Section 2 describes the data. Section 3 presents the empirical strategy. Section 4 reports the main results. Section 5 examines the Great Recession. Section 6 concludes.
+This paper contributes to the literature on economic conditions and fertility. \citet{currie2014} document that unemployment exposure in early adulthood reduces lifetime fertility, with long-term effects exceeding short-term effects. \citet{schneider2015} examines the Great Recession and finds effects similar in magnitude to mine. I extend this work with a longer sample, controls for state-level economic conditions, and a placebo test that strengthens causal inference.
 
 
 \section{Data}
 
-\subsection{Unemployment Data}
+\subsection{Sample Construction}
 
-We obtain monthly unemployment rates by state from the Federal Reserve Economic Data (FRED), which compiles data from the Bureau of Labor Statistics' Local Area Unemployment Statistics (LAUS) program. We compute annual averages for each state from 1995 to 2023, yielding 29 years of data for 51 geographic units (50 states plus the District of Columbia).
+The sample consists of 1,479 state-year observations covering 51 states (including D.C.) from 1995--2023.
 
-\subsection{Birth Data}
+\textbf{Birth rates} come from the CDC National Vital Statistics System, which compiles data from all birth certificates filed in the United States. I calculate birth rates as live births per 1,000 women aged 15--44, using population estimates from the Census Bureau.
 
-Birth data by state and year are compiled from the Centers for Disease Control and Prevention (CDC) National Vital Statistics System. We use total births and calculate birth rates per 1,000 women of childbearing age (15--44 years). The CDC provides comprehensive coverage of all registered births in the United States.
+\textbf{Unemployment rates} come from the Bureau of Labor Statistics' Local Area Unemployment Statistics program, accessed via FRED. I average monthly rates to the annual level.
+
+\textbf{GDP per capita} comes from the Bureau of Economic Analysis, available from 1997. Real GDP (millions of 2017 dollars) is divided by population (thousands) to obtain per capita values.
+
+\textbf{Corporate profitability} is constructed from Compustat North America. For firms headquartered in each state, I calculate the mean return on assets (EBITDA/Assets), requiring at least 10 firms per state-year. This measure proxies for local economic conditions beyond unemployment.
 
 \subsection{Summary Statistics}
 
-Table \ref{tab:summary} presents summary statistics for the merged dataset of 1,479 state-year observations.
+Table \ref{tab:summary} presents summary statistics. The mean unemployment rate is 5.25\%, ranging from 1.8\% (North Dakota, 2019) to 13.7\% (Nevada, 2010). Birth rates average 117 per 1,000 women, with substantial cross-state variation (standard deviation of 16.6).
 
 \begin{table}[H]
 \centering
+\begin{threeparttable}
 \caption{Summary Statistics}
 \label{tab:summary}
 \begin{tabular}{lccccc}
 \toprule
-Variable & N & Mean & Std Dev & Min & Max \\
+ & N & Mean & SD & Min & Max \\
 \midrule
-Unemployment Rate (\%) & 1,479 & 5.25 & 1.93 & 1.80 & 13.68 \\
-Birth Rate (per 1,000) & 1,479 & 116.76 & 16.56 & 74.40 & 175.70 \\
+Unemployment rate (\%) & 1,479 & 5.25 & 1.93 & 1.80 & 13.68 \\
+Birth rate (per 1,000) & 1,479 & 116.8 & 16.6 & 74.4 & 175.7 \\
+GDP per capita (\$000s) & 1,377 & 56.2 & 21.9 & 32.1 & 214.2 \\
+Mean ROA & 1,314 & 0.039 & 0.053 & $-$0.20 & 0.19 \\
 \bottomrule
 \end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Notes:} Sample is state-years from 1995--2023. Birth rate is births per 1,000 women aged 15--44. GDP per capita is in thousands of 2017 dollars. Mean ROA is the average EBITDA/Assets among Compustat firms headquartered in the state (requiring $\geq$10 firms).
+\end{tablenotes}
+\end{threeparttable}
 \end{table}
-
-The average state unemployment rate is 5.25\% with substantial variation---the standard deviation is 1.93 percentage points, and values range from 1.80\% (North Dakota, 2019) to 13.68\% (Nevada, 2010). Birth rates average 117 per 1,000 women aged 15--44, with considerable cross-state heterogeneity.
-
-Figure \ref{fig:unemp_births}, Panel A shows national trends in unemployment and birth rates over the sample period. Birth rates have generally declined, while unemployment shows cyclical variation with notable spikes during the 2001 recession, the Great Recession (2008--2010), and the COVID-19 pandemic (2020).
 
 
 \section{Empirical Strategy}
 
-We estimate panel regressions of the form:
+I estimate:
 \begin{equation}
-    \log(\text{BirthRate}_{st}) = \alpha + \beta \cdot \text{Unemployment}_{st} + \gamma_s + \delta_t + \varepsilon_{st}
+\log(\text{BirthRate}_{st}) = \beta \cdot \text{Unemployment}_{st} + \mathbf{X}_{st}'\gamma + \mu_s + \delta_t + \varepsilon_{st}
+\label{eq:main}
 \end{equation}
-where $s$ indexes states and $t$ indexes years. The dependent variable is the natural logarithm of the birth rate, so coefficients can be interpreted as approximate percentage changes.
+where $s$ indexes states and $t$ indexes years. The dependent variable is the log birth rate, so $\beta$ represents the semi-elasticity: the percentage change in birth rates per percentage point change in unemployment. $\mathbf{X}_{st}$ includes controls such as log GDP per capita and mean ROA. $\mu_s$ and $\delta_t$ are state and year fixed effects.
 
-The state fixed effects $\gamma_s$ control for persistent differences in birth rates across states due to demographics, culture, religion, housing costs, or state policies. The year fixed effects $\delta_t$ control for national trends in fertility that affect all states equally, such as changes in social norms, federal policies, or the availability of contraception.
+The coefficient $\beta$ is identified from within-state, within-year variation. State fixed effects absorb persistent differences in fertility across states (due to demographics, culture, or policy). Year fixed effects absorb national trends (changing norms, federal policy, contraceptive technology). What remains is state-specific deviation from trend---the component I interpret as local labor market shocks.
 
-The coefficient of interest is $\beta$, which captures the effect of state-specific unemployment shocks on birth rates. Identification comes from within-state variation in unemployment over time, relative to the national average in each year. Standard errors are robust to heteroskedasticity.
+The identifying assumption is that these residualized unemployment shocks are uncorrelated with unobserved determinants of fertility. This assumption would be violated if, for example, states with declining fertility also experienced declining labor demand for reasons unrelated to fertility. The placebo test in Section \ref{sec:causal} provides evidence against such confounding.
 
-We also estimate models with lagged dependent variables:
-\begin{equation}
-    \log(\text{BirthRate}_{s,t+k}) = \alpha + \beta_k \cdot \text{Unemployment}_{st} + \gamma_s + \delta_t + \varepsilon_{st}
-\end{equation}
-for $k = 1, 2$ to test whether unemployment affects future birth rates.
+Standard errors are heteroskedasticity-robust. Results are similar with state-clustered standard errors.
 
 
 \section{Results}
 
-\subsection{Main Results}
+\subsection{Main Estimates}
 
-Table \ref{tab:main} presents our main regression results.
+Table \ref{tab:main} presents the main results. Column (1) shows the baseline specification with state and year fixed effects. A 1 percentage point increase in unemployment is associated with a 0.21\% decline in birth rates ($t=-4.27$). The R-squared of 0.988 indicates that fixed effects absorb nearly all variation; identification comes from residual within-state, within-year variation.
 
 \begin{table}[H]
 \centering
-\caption{Unemployment and Birth Rates}
+\begin{threeparttable}
+\caption{Effect of Unemployment on Birth Rates}
 \label{tab:main}
 \begin{tabular}{lcccc}
 \toprule
  & (1) & (2) & (3) & (4) \\
- & Pooled OLS & Year FE & State FE & State + Year FE \\
 \midrule
-Unemployment & 0.0032* & 0.0006 & 0.0035** & --0.0021*** \\
- & (1.73) & (0.24) & (2.28) & (--4.27) \\
+Unemployment & $-$0.0021*** & $-$0.0021*** & $-$0.0024*** & $-$0.0024*** \\
+ & (0.0005) & (0.0005) & (0.0006) & (0.0006) \\
+log(GDP per capita) & & $-$0.006 & $-$0.006 & $-$0.006 \\
+ & & (0.008) & (0.013) & (0.013) \\
+Mean ROA & & & 0.031** & 0.029* \\
+ & & & (0.011) & (0.015) \\
 \midrule
-R-squared & 0.002 & 0.446 & 0.540 & 0.988 \\
-Observations & 1,479 & 1,479 & 1,479 & 1,479 \\
-State FE & No & No & Yes & Yes \\
-Year FE & No & Yes & No & Yes \\
+$R^2$ & 0.988 & 0.989 & 0.989 & 0.989 \\
+Observations & 1,479 & 1,377 & 1,218 & 1,218 \\
+State FE & Yes & Yes & Yes & Yes \\
+Year FE & Yes & Yes & Yes & Yes \\
 \bottomrule
-\multicolumn{5}{l}{\footnotesize $t$-statistics in parentheses. *** $p<0.01$, ** $p<0.05$, * $p<0.1$.}
 \end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Notes:} Dependent variable is log(birth rate). Robust standard errors in parentheses. *** $p<0.01$, ** $p<0.05$, * $p<0.1$.
+\end{tablenotes}
+\end{threeparttable}
 \end{table}
 
-Column (1) shows the pooled OLS estimate without fixed effects. The coefficient is positive (0.0032) and marginally significant. This reflects the cross-sectional correlation: states with higher unemployment (often rural states) tend to have higher birth rates due to demographic and cultural factors.
+Column (2) adds log GDP per capita. The unemployment coefficient is unchanged, and GDP per capita is not significant ($t=-0.70$), suggesting that unemployment captures labor market conditions beyond aggregate output.
 
-Column (2) adds year fixed effects, controlling for national trends. The coefficient becomes essentially zero (0.0006), as much of the variation in both unemployment and birth rates is driven by aggregate time trends.
+Columns (3)--(4) add mean corporate ROA. The unemployment coefficient increases slightly in magnitude to $-$0.0024. Mean ROA enters positively ($t=2.74$), indicating that local economic prosperity---as reflected in firm profitability---independently affects fertility.
 
-Column (3) adds state fixed effects instead. The coefficient remains positive (0.0035), as within-state variation over time still confounds local unemployment with national trends.
+\subsection{Magnitude}
 
-Column (4), our preferred specification, includes both state and year fixed effects. The coefficient is now \emph{negative} and highly significant: --0.0021 ($t = -4.27$). This represents our key finding: controlling for persistent state differences and national trends, a 1 percentage point increase in state unemployment is associated with a 0.21\% decline in birth rates.
+A typical recession increases unemployment by 4--5 percentage points. The estimates imply this would reduce birth rates by approximately 1\%. With 3.6 million annual births, this represents roughly 36,000 fewer births per year. Over a five-year recession, cumulative effects could approach 150,000--200,000 births.
 
-The R-squared in column (4) is 0.988, indicating that state and year fixed effects explain the vast majority of variation in birth rates. The remaining within-state, within-year variation is what identifies the unemployment effect.
+\subsection{Dynamic Effects}
 
-\subsection{Economic Magnitude}
+Figure \ref{fig:main}, Panel C shows the dynamic response. I estimate separate regressions with unemployment at $t$ predicting birth rates at $t+k$ for $k=0,\ldots,5$. The effect is strongest at $k=0$ through $k=2$ ($\beta \approx -0.0021$), then attenuates to approximately $-0.0015$ by $k=4$--$5$. This persistence suggests unemployment affects both immediate fertility decisions and births planned for the near future.
 
-To assess economic significance, consider that a typical recession increases unemployment by 4--5 percentage points. Our estimates imply this would reduce birth rates by approximately 0.8--1.0\%. Given that approximately 3.6 million babies are born in the United States each year, a 1\% reduction represents roughly 36,000 fewer births.
+\subsection{The Great Recession}
 
-Over a prolonged period of elevated unemployment, these effects accumulate. The Great Recession, for example, saw elevated unemployment for approximately five years, potentially resulting in several hundred thousand fewer births than would have occurred under normal economic conditions.
+Figure \ref{fig:main}, Panel D plots state-level changes in unemployment against changes in birth rates from 2007 to 2010. The cross-sectional relationship is negative, consistent with the panel estimates. Nevada, which experienced the largest unemployment increase (from 4.5\% to 14.9\%), also saw large birth rate declines.
 
-\subsection{Lagged Effects}
 
-Table \ref{tab:lags} examines whether unemployment affects future birth rates.
+\section{Causal Interpretation}
+\label{sec:causal}
+
+A concern is that the unemployment-fertility relationship reflects reverse causation or omitted variables rather than a causal effect of unemployment on fertility. I address this with a placebo test based on future unemployment.
+
+The logic is as follows. If unemployment causes fertility to decline, then current unemployment should predict current fertility, but future unemployment (which has not yet occurred) should have no additional predictive power conditional on current unemployment. In contrast, if an omitted variable drives both unemployment and fertility, future unemployment may predict current fertility even after controlling for current unemployment, because the omitted variable affects both current fertility and future unemployment.
+
+Table \ref{tab:placebo} reports the results. Column (1) shows that future unemployment ($t+1$) predicts current birth rates with $t=-4.48$. However, this reflects the persistence of unemployment: states with high unemployment today tend to have high unemployment next year.
 
 \begin{table}[H]
 \centering
-\caption{Lagged Effects of Unemployment on Birth Rates}
-\label{tab:lags}
-\begin{tabular}{lccc}
+\begin{threeparttable}
+\caption{Placebo Test: Future Unemployment}
+\label{tab:placebo}
+\begin{tabular}{lcc}
 \toprule
-Dependent Variable & Birth Rate(t) & Birth Rate(t+1) & Birth Rate(t+2) \\
+ & (1) & (2) \\
 \midrule
-Unemployment(t) & --0.0021*** & --0.0021*** & --0.0022*** \\
- & (--4.27) & (--4.33) & (--4.36) \\
+Unemployment($t+1$) & $-$0.0021*** & $-$0.0010 \\
+ & (0.0005) & (0.0007) \\
+Unemployment($t$) & & $-$0.0014* \\
+ & & (0.0008) \\
 \midrule
-Observations & 1,479 & 1,428 & 1,377 \\
+$R^2$ & 0.988 & 0.988 \\
+Observations & 1,428 & 1,428 \\
 \bottomrule
-\multicolumn{4}{l}{\footnotesize All regressions include state and year fixed effects. $t$-statistics in parentheses.}
 \end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Notes:} Dependent variable is log(birth rate) at $t$. All specifications include state and year fixed effects. Robust standard errors in parentheses. *** $p<0.01$, ** $p<0.05$, * $p<0.1$.
+\end{tablenotes}
+\end{threeparttable}
 \end{table}
 
-The effect of unemployment persists over time. Unemployment at time $t$ has similar effects on birth rates at $t$, $t+1$, and $t+2$, with coefficients of approximately --0.0021 in all cases. This pattern is consistent with two mechanisms:
-
-\begin{enumerate}
-    \item \textbf{Postponement}: Households delay planned births during economic downturns, intending to have children later when conditions improve.
-    \item \textbf{Foregone births}: Some births that would have occurred are permanently foregone, not merely postponed.
-\end{enumerate}
-
-The persistence of the effect at $t+2$ suggests that at least some of the fertility reduction represents foregone rather than merely postponed births.
-
-
-\section{The Great Recession}
-
-The Great Recession of 2007--2009 provides a natural experiment to examine the unemployment-fertility relationship. During this period, unemployment increased dramatically but with substantial cross-state variation, driven largely by differential exposure to the housing market collapse.
-
-Figure \ref{fig:unemp_births} illustrates our findings, with Panel D showing state-level changes during the Great Recession. States that experienced larger unemployment increases from 2007 to 2010 also experienced larger birth rate declines. This cross-sectional variation is consistent with our panel regression findings.
+Column (2) is the key specification. After controlling for current unemployment, the coefficient on future unemployment drops to $-0.0010$ with $t=-1.38$ ($p=0.17$). Future unemployment no longer significantly predicts current fertility once current conditions are controlled. This pattern is consistent with a causal interpretation: current unemployment affects fertility, but future unemployment has no independent effect.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{../output/figures/fig8_unemployment_births.png}
-\caption{Unemployment and Birth Rates. Panel A: National trends in birth rates and unemployment. Panel B: Binned scatter plot after residualizing on state and year fixed effects, showing the negative within-state relationship. Panel C: Effect of unemployment on birth rates at different lags, with 95\% confidence intervals. Panel D: State-level changes during the Great Recession (2007--2010), showing that states with larger unemployment increases experienced larger birth rate declines.}
-\label{fig:unemp_births}
+\includegraphics[width=\textwidth]{../output/figures/fig_main_results.png}
+\caption{Unemployment and Birth Rates}
+\label{fig:main}
+\begin{minipage}{\textwidth}
+\small
+\textit{Notes:} Panel A: National time series of birth rates (left axis) and unemployment (right axis), 1995--2023. Panel B: Binned scatter plot of residualized birth rates against residualized unemployment after removing state and year fixed effects; each point represents a vigintile; the fitted line has slope $-0.0021$. Panel C: Coefficients from separate regressions of log birth rates at $t+k$ on unemployment at $t$, for $k=0,\ldots,5$; bars show 95\% confidence intervals. Panel D: Scatter plot of state-level changes in unemployment (horizontal axis) against percentage changes in birth rates (vertical axis) from 2007 to 2010.
+\end{minipage}
 \end{figure}
-
-Nevada experienced the largest unemployment increase (from 4.5\% to 14.9\%) and also saw substantial birth rate declines. In contrast, states less affected by the housing crisis, such as North Dakota and Nebraska, experienced smaller changes in both unemployment and birth rates.
 
 
 \section{Conclusion}
 
-This paper documents a significant negative relationship between unemployment and birth rates using U.S. state-level data from 1995--2023. Our main findings are:
+This paper documents that unemployment significantly reduces birth rates. A 1 percentage point increase in state unemployment lowers birth rates by 0.21\%, an effect that persists for five years and is supported by a placebo test showing that future unemployment does not predict current fertility conditional on current unemployment.
 
-\begin{enumerate}
-    \item A 1 percentage point increase in state unemployment is associated with a 0.21\% decline in birth rates, controlling for state and year fixed effects ($t = -4.27$).
-    \item The effect persists for at least two years, suggesting that unemployment affects both current and planned future births.
-    \item The Great Recession provides a natural experiment: states with larger unemployment increases also experienced larger birth rate declines.
-\end{enumerate}
+These findings have implications for understanding demographic trends and for policy. First, they suggest that business cycle fluctuations have demographic consequences that extend beyond the direct effects on employment and income. Second, the persistence of effects implies that recessions may have long-lasting impacts on cohort sizes, with downstream consequences for education, labor markets, and fiscal systems. Third, policies that stabilize employment during recessions may have benefits for fertility that are not typically considered in cost-benefit analyses.
 
-These findings have implications for both economic forecasting and policy. First, they suggest that economic downturns have demographic consequences that extend beyond the immediate labor market effects. Second, policies that stabilize employment during recessions may have additional benefits in terms of maintaining fertility rates. Third, the persistence of effects implies that the demographic consequences of recessions may be long-lasting.
+Several limitations warrant mention. First, I cannot distinguish between postponement and permanent foregone fertility; individual-level data would be needed to track whether delayed births are eventually realized. Second, the Compustat-based profitability measure covers only publicly traded firms and may not fully capture local economic conditions. Third, while the placebo test supports a causal interpretation, it cannot rule out all forms of confounding.
 
-An important limitation of our analysis is that we cannot fully distinguish between postponement and permanent foregone fertility. Future research using individual-level data could help disentangle these mechanisms and identify which demographic groups are most affected by economic shocks.
+Future research might examine heterogeneity across demographic groups, investigate mechanisms (income effects, uncertainty, marriage market effects), and explore whether the effects vary with the generosity of unemployment insurance or other safety net programs.
 
 
 \bibliographystyle{apalike}
