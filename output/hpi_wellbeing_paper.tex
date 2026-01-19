@@ -1,0 +1,439 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{threeparttable}
+\usepackage{multirow}
+\usepackage{adjustbox}
+\doublespacing
+
+\title{\Large \textbf{Housing Wealth, Mental Health, and Mortality: \\[0.3em] Causal Evidence from the U.S. Housing Cycle}}
+
+\author{
+Sylvain Catherine\thanks{The Wharton School, University of Pennsylvania. Email: \texttt{scath@wharton.upenn.edu}.} \and
+Augustin Landier\thanks{HEC Paris.} \and
+David Thesmar\thanks{MIT Sloan School of Management.}
+}
+
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\noindent We estimate the causal effect of housing wealth on mental health and mortality using U.S. state-level data from 2000--2022. Instrumenting house price growth with land supply elasticity interacted with national housing cycles, we find that a 10 percentage point house price decline increases suicide rates by 9 percent, mental health distress by 1.4 percentage points, and self-reported poor health by 1.8 percentage points. These effects are economically large: the 2007--2011 housing bust caused approximately 10,000--13,000 excess suicides. Our findings demonstrate that housing wealth shocks---distinct from labor market shocks---causally contribute to ``deaths of despair'' and population mental health.
+
+\vspace{0.5cm}
+\noindent \textbf{JEL Codes}: I12, I31, R31, J11
+
+\noindent \textbf{Keywords}: Suicide, Mental Health, Housing Wealth, Deaths of Despair, Instrumental Variables
+\end{abstract}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Suicide rates in the United States have increased by over 35 percent since 2000, now claiming nearly 50,000 lives annually. Mental health has deteriorated in parallel: the share of Americans reporting frequent mental distress rose from 10 percent in 2005 to 16 percent by 2023. These trends have been particularly pronounced among middle-aged Americans, contributing to the broader phenomenon of ``deaths of despair'' documented by \cite{case2015rising, case2020deaths}. While economic distress is often implicated, establishing causality is difficult: economic conditions, mental health, and mortality are jointly determined by many factors.
+
+This paper estimates the causal effect of housing wealth shocks on mental health and mortality. Housing is the primary asset for most American households, representing over 60 percent of wealth for the median homeowner. The 2000s housing cycle generated large, geographically concentrated wealth shocks: national house prices rose 80 percent from 2000 to 2006, then fell 30 percent by 2012, with dramatically different experiences across states. Nevada homeowners lost 55 percent of their housing wealth; Texas homeowners saw modest gains.
+
+We exploit geographic variation in housing supply elasticity for identification. Following \cite{saiz2010geographic}, we instrument state-level house price growth using land supply constraints interacted with national housing cycles. States with inelastic supply---coastal areas with geographic barriers and restrictive zoning---experience amplified price swings in response to national demand shocks. This isolates variation driven by national factors and time-invariant geography, rather than local economic conditions that might directly affect health outcomes.
+
+Our main findings are:
+
+\begin{enumerate}
+    \item \textbf{Suicide}: A 10 percentage point house price decline increases suicide rates by 8.9 percent (IV), compared to 1.5 percent in OLS. The IV estimate is highly significant ($t = 4.1$) with a first-stage F-statistic of 77. The 2007--2011 housing bust caused approximately 10,000--13,000 excess suicides.
+
+    \item \textbf{Mental health}: House price declines significantly worsen mental health. A 10pp decline increases frequent mental distress (14+ bad days per month) by 1.4 percentage points ($t = 3.0$) and the share reporting fair or poor health by 1.8 percentage points ($t = 3.9$).
+
+    \item \textbf{Fertility}: Despite a positive OLS correlation, the IV estimate is insignificant ($t = -1.0$), suggesting the OLS relationship reflects selection rather than causation.
+\end{enumerate}
+
+The IV estimates exceed OLS by a factor of 5--10 for outcomes where we detect effects. This is consistent with classical attenuation bias: state-level house price indices imperfectly measure the housing wealth shocks experienced by individual residents, who vary in homeownership rates, home equity, and location within states.
+
+\subsection{Related Literature}
+
+\textbf{Deaths of despair.} \cite{case2015rising} document rising mortality among middle-aged white Americans from suicide, drug overdoses, and alcohol-related liver disease. \cite{case2020deaths} attribute this to economic and social decline in working-class communities. \cite{charles2019manufacturing} and \cite{autor2019work} show that manufacturing decline increases mortality. \cite{pierce2020trade} find that trade liberalization with China increased death rates in affected counties. We complement this literature by showing that wealth shocks---distinct from labor market shocks---also contribute to deaths of despair.
+
+\textbf{Economic conditions and mental health.} A large epidemiological literature documents correlations between economic downturns and mental health \citep{catalano2011economic}. \cite{ruhm2000good} finds that recessions reduce some causes of mortality (traffic, pollution) while increasing others. \cite{sullivan2009job} show that job displacement increases mortality, particularly from suicide. \cite{currie2015housing} document that foreclosures harm health. We contribute by isolating the effect of house price changes on mental health, which operates through wealth even absent job loss or foreclosure.
+
+\textbf{Real effects of house prices.} House prices affect consumption \citep{mian2013household}, fertility \citep{dettling2014house, lovenheim2013effect}, entrepreneurship \citep{adelino2015house}, and labor supply \citep{disney2010house}. We extend this literature to health outcomes, showing that housing wealth has consequences for mental health and mortality.
+
+\textbf{Health effects of wealth shocks.} \cite{apouey2010health} find that lottery winners report improved mental health. \cite{schwandt2018wealth} show that stock market losses increase cardiovascular mortality among the elderly. We study a different wealth shock---housing---that affects a broader population since homeownership is more prevalent than stock ownership.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Data}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We construct a state-year panel combining mortality, mental health, fertility, house prices, and housing supply elasticity data. This section describes each data source in detail to facilitate replication.
+
+\subsection{Suicide Rates}
+
+We obtain state-level age-adjusted suicide mortality rates from CDC WONDER (\url{https://wonder.cdc.gov}), the public-use database of the National Vital Statistics System. We query deaths with underlying cause of death classified as intentional self-harm (ICD-10 codes X60--X84). Rates are age-adjusted using the 2000 U.S. standard population and expressed per 100,000 population. Our sample covers 2000--2022 for all 50 states plus the District of Columbia ($N = 1{,}173$ state-years).
+
+\subsection{Mental Health Measures}
+
+Mental health data come from the Behavioral Risk Factor Surveillance System (BRFSS), the largest continuously conducted health survey in the world. BRFSS is administered by the CDC and collects data from over 400,000 adults annually via telephone surveys. We download annual microdata files from \url{https://www.cdc.gov/brfss/annual_data/} for 2005--2023.
+
+From BRFSS we extract three measures:
+
+\begin{itemize}
+    \item \textbf{Mental health days}: The MENTHLTH question asks ``Now thinking about your mental health, which includes stress, depression, and problems with emotions, for how many days during the past 30 days was your mental health not good?'' We compute state-year means using survey weights (\_LLCPWT for 2011+, \_FINALWT for 2005--2010).
+
+    \item \textbf{Frequent mental distress}: An indicator for reporting 14 or more days of poor mental health in the past 30 days. This is a standard threshold used in public health research \citep{cdc2020fmd}.
+
+    \item \textbf{Fair/poor health}: From the GENHLTH question asking respondents to rate their general health as excellent, very good, good, fair, or poor. We compute the share reporting fair or poor health.
+\end{itemize}
+
+We aggregate individual responses to state-year means using survey weights. The resulting dataset covers 54 state/territory units for 2005--2023 ($N = 1{,}011$ state-years for the full BRFSS sample, $N = 916$ when merged with our 2005--2022 analysis window).
+
+\subsection{Fertility Rates}
+
+State-level birth rates come from the CDC National Vital Statistics System, accessed via CDC WONDER. We calculate birth rates as live births per 1,000 women aged 15--44 using annual population estimates from the Census Bureau. The sample covers 1995--2023.
+
+\subsection{House Price Index}
+
+We use the Federal Housing Finance Agency (FHFA) all-transactions House Price Index at the state level. This index measures average price changes in repeat sales or refinancings on the same properties, providing a quality-adjusted measure of house price movements. Data are available quarterly from 1975; we use Q4 values to construct annual series. We compute HPI growth as the year-over-year percentage change. Data are downloaded from \url{https://www.fhfa.gov/DataTools/Downloads/Pages/House-Price-Index-Datasets.aspx}.
+
+\subsection{Land Supply Elasticity}
+
+We construct state-level housing supply elasticity measures from \cite{saiz2010geographic}, who estimates MSA-level elasticities using geographic constraints (water bodies, steep terrain) and land use regulations. We aggregate MSA elasticities to states using population weights. Low-elasticity states include California (0.6), Hawaii (0.5), New Jersey (0.7), and the Northeast corridor. High-elasticity states include Texas (2.0), Kansas (2.3), and the Great Plains states (Nebraska, Iowa, the Dakotas).
+
+\subsection{Summary Statistics}
+
+Table \ref{tab:sumstats} reports summary statistics. The average suicide rate is 14.1 per 100,000, with substantial cross-state variation (SD = 4.4). Annual HPI growth averages 4.6\% with large swings (SD = 6.3\%, range $-24\%$ to $+22\%$). Mental distress averages 12\% of the population, rising from 10\% in 2005 to 16\% by 2023.
+
+\begin{table}[H]
+\centering
+\caption{Summary Statistics}
+\label{tab:sumstats}
+\begin{threeparttable}
+\begin{tabular}{lccccc}
+\toprule
+Variable & N & Mean & SD & Min & Max \\
+\midrule
+\multicolumn{6}{l}{\textit{Panel A: Main Sample (2000--2022)}} \\
+Suicide rate (per 100k) & 1,173 & 14.12 & 4.39 & 5.65 & 32.31 \\
+Fertility rate (per 1,000) & 1,173 & 63.8 & 9.2 & 44.1 & 91.5 \\
+HPI growth (\%) & 1,173 & 4.63 & 6.33 & $-23.78$ & 22.01 \\
+Land elasticity & 1,173 & 1.58 & 0.59 & 0.40 & 2.80 \\
+Instrument (Z) & 1,173 & 3.45 & 3.74 & $-9.75$ & 18.78 \\
+\midrule
+\multicolumn{6}{l}{\textit{Panel B: BRFSS Sample (2005--2022)}} \\
+Mental health days (0--30) & 916 & 3.86 & 0.73 & 2.05 & 6.57 \\
+Frequent distress (\%) & 916 & 12.0 & 2.7 & 6.0 & 22.0 \\
+Fair/poor health (\%) & 916 & 16.9 & 4.1 & 10.1 & 37.1 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Notes}: Panel A: 51 states $\times$ 23 years. Panel B: up to 54 state/territory units $\times$ 18 years, restricted to states with elasticity data. Frequent distress = share reporting 14+ bad mental health days per month.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+Figure \ref{fig:trends} plots national trends. House prices peaked in 2006 and declined through 2012 (Panel A). Suicide rates were flat from 2000--2007, then rose steadily---precisely when house prices began declining (Panel B). Mental health deteriorated continuously, with the share experiencing frequent distress rising from 10\% to 16\% (Panel E). Fertility declined throughout the period (Panel C).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/fig1_trends.pdf}
+\caption{\textbf{National Trends, 2000--2023.} Shaded region indicates the Great Financial Crisis (2007--2009). Panel A: House Price Index. Panel B: Age-adjusted suicide rate per 100,000. Panel C: Birth rate per 1,000 women aged 15--44. Panels D--F: BRFSS mental health measures (available from 2005).}
+\label{fig:trends}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Empirical Strategy}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Baseline Specification}
+
+We estimate the effect of house price growth on outcomes using:
+\begin{equation}
+Y_{st} = \beta \cdot \text{HPIGrowth}_{st} + \gamma_s + \delta_t + \varepsilon_{st}
+\label{eq:ols}
+\end{equation}
+where $Y_{st}$ is the outcome (log suicide rate, mental health measure, or log fertility rate) in state $s$ and year $t$. $\gamma_s$ and $\delta_t$ are state and year fixed effects, which absorb time-invariant state characteristics and national trends. Standard errors are clustered by state to account for serial correlation.
+
+\subsection{Instrumental Variables}
+
+OLS estimates of $\beta$ may be biased by omitted variables (local economic conditions affecting both house prices and health) or reverse causality (declining population health reducing housing demand). We address this using an instrumental variables strategy.
+
+Following \cite{saiz2010geographic}, we instrument state-level house price growth with:
+\begin{equation}
+Z_{st} = \Delta \text{HPI}^{\text{National}}_t \times \frac{1}{\text{Elasticity}_s}
+\label{eq:iv}
+\end{equation}
+
+The instrument captures how national housing demand shocks differentially affect states based on their time-invariant supply constraints. States with inelastic housing supply (low $\text{Elasticity}_s$)---typically coastal states with geographic barriers like mountains, water, or strict zoning---experience larger price swings in response to national demand changes. States with elastic supply (high $\text{Elasticity}_s$)---typically interior states with abundant buildable land---see smaller price movements as new construction absorbs demand.
+
+Year fixed effects absorb the direct effect of national HPI movements. State fixed effects absorb level differences across states. Identification comes from the \textit{interaction}: how much each state's prices move relative to national trends, driven by geography determined decades or centuries ago.
+
+\subsection{Identification Assumptions}
+
+The IV estimator requires:
+
+\textbf{Relevance}: The instrument must predict state-level house price growth. We test this with first-stage F-statistics; values above 10 indicate a strong instrument \citep{stock2005testing}.
+
+\textbf{Exclusion}: Land supply elasticity must affect outcomes only through house prices. This would be violated if elasticity correlates with other time-varying determinants of health. We assess this in three ways:
+
+\begin{enumerate}
+    \item \textit{Geographic determinism}: Elasticity is determined by topography (mountains, water bodies) and historical land use patterns, making it unlikely to correlate with recent changes in health risk factors.
+
+    \item \textit{Pre-trends}: Figure \ref{fig:pretrends} shows that low- and high-elasticity states had parallel suicide trends before the 2007 housing bust, suggesting no differential pre-existing trends.
+
+    \item \textit{Robustness to controls}: Results are robust to controlling for state unemployment rates, which could confound if elastic and inelastic states had different labor market trajectories.
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/fig4_pretrends.pdf}
+\caption{\textbf{Pre-trends: Low vs. High Elasticity States.} Panel A: House Price Index indexed to 2000 = 100. Low-elasticity states (CA, FL, NY, NJ, etc.) experienced larger housing booms and busts. Panel B: Suicide rates indexed to 2000 = 100. Low- and high-elasticity states had parallel trends before 2007; divergence occurs during the housing bust. Shaded region: GFC (2007--2009).}
+\label{fig:pretrends}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Main Estimates}
+
+Table \ref{tab:main} presents our main results. Panel A reports OLS estimates; Panel B reports IV estimates. Each column represents a different outcome.
+
+\begin{table}[H]
+\centering
+\caption{Effect of House Prices on Health and Fertility}
+\label{tab:main}
+\begin{threeparttable}
+\begin{tabular}{lccccc}
+\toprule
+ & (1) & (2) & (3) & (4) & (5) \\
+ & Suicide & Mental & Frequent & Fair/Poor & Fertility \\
+ & (log) & Days & Distress & Health & (log) \\
+\midrule
+\multicolumn{6}{l}{\textit{Panel A: OLS}} \\
+HPI Growth & $-0.00149^{**}$ & $-0.00500^{*}$ & $-0.00016^{*}$ & $-0.00024^{**}$ & $0.00038^{**}$ \\
+ & (0.00064) & (0.00279) & (0.00009) & (0.00010) & (0.00017) \\
+$t$-statistic & $-2.34$ & $-1.79$ & $-1.74$ & $-2.38$ & $2.20$ \\
+\midrule
+\multicolumn{6}{l}{\textit{Panel B: IV}} \\
+HPI Growth & $-0.00889^{***}$ & $-0.02642^{**}$ & $-0.00138^{***}$ & $-0.00177^{***}$ & $-0.00041$ \\
+ & (0.00217) & (0.01296) & (0.00045) & (0.00046) & (0.00042) \\
+Reduced form $t$ & $-4.09$ & $-2.04$ & $-3.04$ & $-3.87$ & $-0.98$ \\
+First-stage F & 77 & 30 & 30 & 30 & 77 \\
+\midrule
+State, Year FE & Yes & Yes & Yes & Yes & Yes \\
+Years & 2000--22 & 2005--22 & 2005--22 & 2005--22 & 2000--22 \\
+Observations & 1,173 & 916 & 916 & 916 & 1,173 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Notes}: Each column is a separate regression. Panel A: OLS with state and year fixed effects. Panel B: IV using land supply elasticity $\times$ national HPI growth as instrument. Standard errors clustered by state. Mental Days = mean days of poor mental health (0--30 scale). Frequent Distress = share with 14+ bad days. Fair/Poor Health = share reporting fair or poor health. *** $p<0.01$, ** $p<0.05$, * $p<0.10$.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\textbf{Suicide (Column 1)}: The OLS estimate suggests that a 1 percentage point increase in HPI growth is associated with a 0.15\% decline in suicide rates ($t = -2.3$). The IV estimate is substantially larger: $-0.89$\% per percentage point of HPI growth ($t = -4.1$). A 10pp house price decline increases suicide by 8.9\%.
+
+\textbf{Mental health (Columns 2--4)}: House prices significantly affect mental health. The IV estimates imply that a 10pp HPI decline increases mental health days by 0.26 days per month ($t = -2.0$), frequent mental distress by 1.4 percentage points ($t = -3.0$), and fair/poor health by 1.8 percentage points ($t = -3.9$).
+
+\textbf{Fertility (Column 5)}: The IV estimate is insignificant ($t = -1.0$), despite a positive OLS correlation ($t = 2.2$).
+
+\subsection{Interpreting Magnitudes}
+
+Figure \ref{fig:comparison} visualizes the estimates. Panel A shows that IV estimates exceed OLS by a factor of 5--10 for health outcomes, consistent with attenuation bias in OLS. Panel B displays reduced-form t-statistics: all health outcomes are statistically significant, while fertility is not.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/fig2_ols_iv.pdf}
+\caption{\textbf{OLS vs. IV Estimates.} Panel A: Coefficient on HPI growth with 95\% confidence intervals. Blue bars = OLS; red bars = IV. Panel B: Reduced-form t-statistics. Dashed lines indicate 5\% significance threshold ($|t| = 1.96$). Health outcomes are significant; fertility is not.}
+\label{fig:comparison}
+\end{figure}
+
+The IV/OLS ratio of approximately 6 for suicide is consistent with classical measurement error attenuation. State-level HPI growth imperfectly measures the housing wealth shocks experienced by individual residents, who vary in: (i) homeownership status, (ii) home equity and leverage, (iii) location within the state, and (iv) length of residence. If the noise-to-signal ratio in state HPI as a proxy for individual wealth shocks is approximately 80\%, we would expect an attenuation factor of 5--6.
+
+\subsection{Economic Magnitude: Excess Deaths from the Housing Bust}
+
+We calculate excess deaths from the 2007--2011 housing bust as follows. The average state experienced a 13.5 percentage point cumulative HPI decline from 2006 to 2011 (Nevada: $-55$pp; California: $-40$pp; Florida: $-38$pp). Our IV coefficient implies that each percentage point decline increases suicide by 0.89\%. Thus:
+\[
+\text{Average state suicide increase} = 13.5 \times 0.89\% = 12\%
+\]
+
+Applying this proportional effect to the approximately 175,000 suicides that occurred during 2007--2011 yields roughly 11,000 excess deaths. Using state-specific HPI declines weighted by population gives a similar estimate of 10,000--13,000 excess suicides---approximately 6--7\% of total suicides during this period, or about 2,000--2,500 per year.
+
+Figure \ref{fig:binscatter} displays binned scatterplots of residualized outcomes against residualized HPI growth. The negative slopes for suicide and mental distress are visually apparent.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/fig3_binscatter.pdf}
+\caption{\textbf{Binned Scatterplots.} Each panel shows the relationship between residualized HPI growth (x-axis) and residualized outcome (y-axis) after partialling out state and year fixed effects. Points are ventile means; gray dots are individual observations. Lines are OLS fits. Suicide and mental health show clear negative relationships; fertility does not.}
+\label{fig:binscatter}
+\end{figure}
+
+\subsection{Robustness}
+
+Table \ref{tab:robust} presents robustness checks for the suicide outcome.
+
+\textbf{Sample restrictions (Panel A)}: Results are stable when excluding potential outliers. Excluding DC (extreme elasticity of 0.4) slightly strengthens the estimate. Excluding California (largest state) or high-suicide rural states (Alaska, Wyoming, Montana) yields similar results.
+
+\textbf{Controls (Panel B)}: Adding state unemployment rates as a control tests whether the housing wealth effect operates through labor markets. The coefficient strengthens slightly to $-0.0098$ ($t = -4.2$), indicating that housing wealth affects suicide through channels distinct from employment---likely direct wealth effects, foreclosure stress, or underwater mortgage distress.
+
+\textbf{Time periods (Panel C)}: The effect is present across the boom (2000--2006), bust (2007--2011), and recovery (2012--2022) periods, though standard errors are larger in subsamples.
+
+\begin{table}[H]
+\centering
+\caption{Robustness Checks: Suicide}
+\label{tab:robust}
+\begin{threeparttable}
+\begin{tabular}{lccc}
+\toprule
+Specification & IV Estimate & RF $t$-stat & N \\
+\midrule
+\multicolumn{4}{l}{\textit{Panel A: Sample Restrictions}} \\
+Baseline & $-0.00889$ & $-4.09$ & 1,173 \\
+Excluding DC & $-0.00932$ & $-5.70$ & 1,150 \\
+Excluding CA & $-0.00961$ & $-3.81$ & 1,150 \\
+Excluding AK, WY, MT & $-0.00947$ & $-4.31$ & 1,104 \\
+\midrule
+\multicolumn{4}{l}{\textit{Panel B: Additional Controls}} \\
++ Unemployment rate & $-0.00978$ & $-4.16$ & 1,122 \\
+\midrule
+\multicolumn{4}{l}{\textit{Panel C: By Time Period}} \\
+Boom (2000--2006) & $-0.01126$ & $-2.08$ & 357 \\
+Bust (2007--2011) & $-0.00694$ & $-3.03$ & 255 \\
+Recovery (2012--2022) & $-0.00756$ & $-2.27$ & 561 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Notes}: All specifications include state and year fixed effects with standard errors clustered by state. IV = coefficient on HPI growth instrumented with elasticity $\times$ national HPI. RF $t$ = reduced-form t-statistic.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Mechanisms}
+
+Our findings indicate that housing wealth shocks causally affect mental health and mortality. Several mechanisms may be at work:
+
+\textbf{Direct wealth effects}: House price declines reduce household wealth, generating financial stress even for homeowners who do not sell or face foreclosure. Underwater mortgages (negative equity) may create feelings of being ``trapped'' and inability to relocate for better opportunities.
+
+\textbf{Foreclosure and housing instability}: Severe price declines trigger foreclosures, which are associated with depression, anxiety, and family disruption \citep{currie2015housing}. Even the threat of foreclosure creates chronic stress.
+
+\textbf{Community effects}: Neighborhood house price declines may signal broader economic decline, reducing social cohesion and increasing isolation. Foreclosed and vacant properties create neighborhood blight.
+
+\textbf{Leverage amplification}: Because housing is typically purchased with leverage (mortgages), price declines have amplified effects on net worth. A 20\% price decline can eliminate 100\% of equity for a homeowner with 80\% loan-to-value.
+
+The fact that our estimate is robust to controlling for unemployment suggests that housing wealth operates through channels \textit{distinct from} labor market conditions. This is consistent with direct wealth effects and housing-specific stress (foreclosure, negative equity) rather than correlated labor market shocks.
+
+\subsection{Comparison to Other Wealth Shocks}
+
+Our estimated semi-elasticity of suicide with respect to housing wealth ($-0.089$ per 10pp) can be compared to other wealth shocks. \cite{schwandt2018wealth} find that a 10\% stock market decline increases cardiovascular mortality among the elderly by approximately 0.5\%. Our housing wealth effect on suicide is larger, which may reflect: (i) housing wealth being more salient and less diversified than stock wealth, (ii) housing wealth being more closely tied to identity and community, or (iii) suicide being more responsive to wealth shocks than cardiovascular disease.
+
+\subsection{Policy Implications}
+
+Our findings have implications for housing policy and crisis response:
+
+\textbf{Housing market stabilization}: Programs that stabilize house prices during downturns (e.g., mortgage modification programs like HAMP and HARP during the GFC) may have mortality benefits beyond their direct economic effects.
+
+\textbf{Mental health services}: Housing busts should trigger increased mental health service provision in affected areas. Our estimates suggest that the 2007--2011 period saw significant deterioration in population mental health attributable to house prices.
+
+\textbf{Financial counseling}: Programs helping underwater homeowners navigate negative equity may reduce psychological distress even when they cannot prevent foreclosure.
+
+\subsection{Limitations}
+
+Our analysis has several limitations:
+
+\textbf{Geographic aggregation}: State-level analysis may mask heterogeneity across localities and demographic groups. Future work with county or individual-level data could examine heterogeneity by homeownership status, age, or race.
+
+\textbf{Homeowner vs. renter effects}: We cannot distinguish effects on homeowners (who experience direct wealth losses) from renters (who may benefit from lower housing costs but suffer from neighborhood decline).
+
+\textbf{Wealth vs. foreclosure}: We cannot separate the effect of house price declines per se from the effect of foreclosures and housing instability that accompany severe declines.
+
+\textbf{External validity}: Our estimates are identified primarily from the large housing cycle of the 2000s. Effects might differ for smaller price movements or in different institutional environments.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Housing wealth shocks causally affect mental health and mortality in the United States. Using land supply elasticity as an instrument for house price movements, we find that a 10 percentage point house price decline increases suicide rates by 9 percent, frequent mental distress by 1.4 percentage points, and self-reported poor health by 1.8 percentage points. These effects are economically substantial: the 2007--2011 housing bust caused an estimated 10,000--13,000 excess suicide deaths.
+
+Our findings contribute to the literature on ``deaths of despair'' by demonstrating that wealth shocks---not just labor market shocks---causally affect mortality. Housing is the primary asset for most American households, and house price volatility has direct consequences for population health. Policies that stabilize housing markets and support distressed homeowners may have mortality benefits that extend well beyond their direct economic effects.
+
+\newpage
+\singlespacing
+\bibliographystyle{aer}
+\begin{thebibliography}{99}
+
+\bibitem[Adelino et al.(2015)]{adelino2015house}
+Adelino, M., Schoar, A., \& Severino, F. (2015). House prices, collateral, and self-employment. \textit{Journal of Financial Economics}, 117(2), 288--306.
+
+\bibitem[Apouey \& Clark(2015)]{apouey2010health}
+Apouey, B., \& Clark, A. E. (2015). Winning big but feeling no better? The effect of lottery prizes on physical and mental health. \textit{Health Economics}, 24(5), 516--538.
+
+\bibitem[Autor et al.(2019)]{autor2019work}
+Autor, D., Dorn, D., \& Hanson, G. (2019). When work disappears: Manufacturing decline and the falling marriage market value of young men. \textit{American Economic Review: Insights}, 1(2), 161--178.
+
+\bibitem[Case \& Deaton(2015)]{case2015rising}
+Case, A., \& Deaton, A. (2015). Rising morbidity and mortality in midlife among white non-Hispanic Americans in the 21st century. \textit{Proceedings of the National Academy of Sciences}, 112(49), 15078--15083.
+
+\bibitem[Case \& Deaton(2020)]{case2020deaths}
+Case, A., \& Deaton, A. (2020). \textit{Deaths of Despair and the Future of Capitalism}. Princeton University Press.
+
+\bibitem[Catalano et al.(2011)]{catalano2011economic}
+Catalano, R., Goldman-Mellor, S., Saxton, K., et al. (2011). The health effects of economic decline. \textit{Annual Review of Public Health}, 32, 431--450.
+
+\bibitem[CDC(2020)]{cdc2020fmd}
+Centers for Disease Control and Prevention. (2020). Frequent mental distress among adults. \textit{MMWR Morbidity and Mortality Weekly Report}.
+
+\bibitem[Charles et al.(2019)]{charles2019manufacturing}
+Charles, K. K., Hurst, E., \& Schwartz, M. (2019). The transformation of manufacturing and the decline of US employment. \textit{NBER Macroeconomics Annual}, 33(1), 307--372.
+
+\bibitem[Currie \& Tekin(2015)]{currie2015housing}
+Currie, J., \& Tekin, E. (2015). Is there a link between foreclosure and health? \textit{American Economic Journal: Economic Policy}, 7(1), 63--94.
+
+\bibitem[Dettling \& Kearney(2014)]{dettling2014house}
+Dettling, L. J., \& Kearney, M. S. (2014). House prices and birth rates: The impact of the real estate market on the decision to have a baby. \textit{Journal of Public Economics}, 110, 82--100.
+
+\bibitem[Disney et al.(2010)]{disney2010house}
+Disney, R., Gathergood, J., \& Henley, A. (2010). House price shocks, negative equity, and household consumption in the United Kingdom. \textit{Journal of the European Economic Association}, 8(6), 1179--1207.
+
+\bibitem[Lovenheim \& Mumford(2013)]{lovenheim2013effect}
+Lovenheim, M. F., \& Mumford, K. J. (2013). Do family wealth shocks affect fertility choices? Evidence from the housing market. \textit{Review of Economics and Statistics}, 95(2), 464--475.
+
+\bibitem[Mian et al.(2013)]{mian2013household}
+Mian, A., Rao, K., \& Sufi, A. (2013). Household balance sheets, consumption, and the economic slump. \textit{Quarterly Journal of Economics}, 128(4), 1687--1726.
+
+\bibitem[Pierce \& Schott(2020)]{pierce2020trade}
+Pierce, J. R., \& Schott, P. K. (2020). Trade liberalization and mortality: Evidence from US counties. \textit{American Economic Review: Insights}, 2(1), 47--64.
+
+\bibitem[Ruhm(2000)]{ruhm2000good}
+Ruhm, C. J. (2000). Are recessions good for your health? \textit{Quarterly Journal of Economics}, 115(2), 617--650.
+
+\bibitem[Saiz(2010)]{saiz2010geographic}
+Saiz, A. (2010). The geographic determinants of housing supply. \textit{Quarterly Journal of Economics}, 125(3), 1253--1296.
+
+\bibitem[Schwandt(2018)]{schwandt2018wealth}
+Schwandt, H. (2018). Wealth shocks and health outcomes: Evidence from stock market fluctuations. \textit{American Economic Journal: Applied Economics}, 10(4), 349--377.
+
+\bibitem[Stock \& Yogo(2005)]{stock2005testing}
+Stock, J. H., \& Yogo, M. (2005). Testing for weak instruments in linear IV regression. In D. W. K. Andrews \& J. H. Stock (Eds.), \textit{Identification and Inference for Econometric Models} (pp. 80--108). Cambridge University Press.
+
+\bibitem[Sullivan \& von Wachter(2009)]{sullivan2009job}
+Sullivan, D., \& von Wachter, T. (2009). Job displacement and mortality: An analysis using administrative data. \textit{Quarterly Journal of Economics}, 124(3), 1265--1306.
+
+\end{thebibliography}
+
+\end{document}
